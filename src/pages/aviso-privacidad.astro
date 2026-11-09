@@ -1,0 +1,174 @@
+---
+import Base from '../layouts/Base.astro'
+import Pie from '../components/Pie.astro'
+import Recuadro from '../components/Recuadro.astro'
+import { ENLACE_PRIVACIDAD, RESPONSABLE, RESPONSABLE_INCOMPLETO, SITIO } from '../sitio'
+
+if (RESPONSABLE_INCOMPLETO) {
+  console.warn(
+    '\n  AVISO DE PRIVACIDAD INCOMPLETO: falta llenar RESPONSABLE en src/sitio.ts.' +
+      '\n  No publiques el sitio así.\n',
+  )
+}
+
+const fecha = new Date(`${RESPONSABLE.actualizado}T12:00:00Z`).toLocaleDateString('es-MX', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+})
+---
+
+<Base
+  titulo={`Aviso de privacidad · ${SITIO.nombre}`}
+  descripcion={`Cómo trata ${SITIO.nombre} los datos personales de quienes piden una demo o contactan al equipo, y cómo ejercer tus derechos.`}
+>
+  <header class="encabezado">
+    <div class="contenedor encabezado__fila">
+      <a class="logo" href="/" aria-label={`${SITIO.nombre}, inicio`}>
+        <img src="/flotari-icono.png" alt="" width="34" height="34" />
+        {SITIO.nombre}
+      </a>
+      <nav class="menu" aria-label="Principal">
+        <a href="/">Inicio</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="seccion">
+    <div class="contenedor">
+      <p class="antetitulo">Legal</p>
+      <h1 class="titulo-seccion">Aviso de privacidad</h1>
+      <p class="entrada">
+        Última actualización: {fecha}. Este aviso explica qué hacemos con los datos personales de quien nos escribe
+        para pedir una demo o para preguntar por {SITIO.nombre}.
+      </p>
+
+      {
+        RESPONSABLE_INCOMPLETO && (
+          <Recuadro titulo="Falta llenar este aviso.">
+            <p>
+              Los datos del responsable todavía dicen «POR DEFINIR» en <code>src/sitio.ts</code>. Este recuadro
+              desaparece solo cuando se llenen; no publiques el sitio antes.
+            </p>
+          </Recuadro>
+        )
+      }
+
+      <div class="prosa">
+        <h2>1. Quién responde por tus datos</h2>
+        <p>
+          El responsable del tratamiento es <strong>{RESPONSABLE.nombre}</strong>, con domicilio en{' '}
+          {RESPONSABLE.domicilio}. Para cualquier asunto de privacidad puedes escribir a{' '}
+          <a href={ENLACE_PRIVACIDAD}>{RESPONSABLE.correo}</a>.
+        </p>
+
+        <h2>2. Qué datos recabamos</h2>
+        <p>
+          Solo los que tú nos das cuando nos buscas por WhatsApp o por correo: tu <strong>nombre</strong>, el{' '}
+          <strong>nombre de tu empresa</strong>, tu <strong>teléfono</strong>, tu <strong>correo</strong> y lo que nos
+          cuentes de tu operación para poder cotizarte, como cuántas unidades tienes o a qué se dedica el negocio.
+        </p>
+        <p>
+          <strong>No pedimos ni tratamos datos personales sensibles</strong>, y este sitio no tiene formularios: nada se
+          envía desde aquí.
+        </p>
+
+        <h2>3. Este sitio no te rastrea</h2>
+        <p>
+          La página que estás leyendo <strong>no usa cookies, ni analítica, ni pixeles, ni cualquier otra
+          tecnología de rastreo</strong>. No carga nada de terceros. El servidor donde está alojada guarda registros
+          técnicos de acceso, como la dirección IP y la hora, que sirven para operar y proteger el sitio y se conservan
+          por el tiempo que el proveedor de hospedaje los retiene.
+        </p>
+
+        <h2>4. Para qué usamos tus datos</h2>
+        <p>Hay dos grupos. Los primeros son indispensables para atenderte:</p>
+        <ul>
+          <li>contestar lo que nos preguntes;</li>
+          <li>agendar y dar la demostración;</li>
+          <li>armarte una cotización y darle seguimiento;</li>
+          <li>crear y administrar tu cuenta, si decides contratar;</li>
+          <li>facturar y cumplir las obligaciones legales y fiscales que nos correspondan.</li>
+        </ul>
+        <p>
+          Los segundos <strong>no son necesarios</strong> para atenderte y solo los usamos si no te opones: mandarte
+          novedades del producto, invitaciones a demostraciones y encuestas para mejorarlo.
+        </p>
+
+        <h2>5. Cómo decir que no a los usos que no son necesarios</h2>
+        <p>
+          Basta un correo a <a href={ENLACE_PRIVACIDAD}>{RESPONSABLE.correo}</a> diciendo que no quieres recibir
+          novedades ni encuestas. No tienes que dar explicaciones y seguiremos atendiendo lo que nos pediste. Cada
+          correo de novedades lleva, además, su propio enlace para darte de baja.
+        </p>
+
+        <h2>6. Con quién los compartimos</h2>
+        <p>
+          <strong>No vendemos, ni rentamos, ni cedemos tus datos personales a nadie.</strong> Para operar usamos
+          proveedores que los tratan por nuestra cuenta y siguiendo nuestras instrucciones —hospedaje del sitio y del
+          sistema, y el servicio de correo—, lo que la ley llama <em>encargados</em> y no requiere tu consentimiento.
+        </p>
+        <p>
+          Fuera de eso, solo entregaríamos información si una autoridad competente la requiere por escrito y conforme a
+          la ley.
+        </p>
+
+        <h2>7. Si ya eres cliente del sistema</h2>
+        <p>
+          La información que tú cargues en {SITIO.nombre} —tus unidades, tu personal, tus reservas— sigue siendo tuya.
+          Ahí nosotros actuamos como encargados: la tratamos solo para darte el servicio y según lo que diga el contrato,
+          nunca para fines propios. Tú eres el responsable frente a las personas cuyos datos cargues, y te toca contar
+          con su consentimiento y darles tu propio aviso de privacidad. Puedes descargar toda tu información cuando
+          quieras desde el sistema.
+        </p>
+
+        <h2>8. Tus derechos</h2>
+        <p>
+          La ley te da derecho a <strong>acceder</strong> a tus datos, a <strong>rectificarlos</strong> si están mal, a{' '}
+          <strong>cancelarlos</strong> cuando creas que no hacen falta y a <strong>oponerte</strong> a que los usemos
+          para cierto fin. Son los llamados derechos ARCO. También puedes <strong>revocar</strong> en cualquier momento
+          el consentimiento que nos hayas dado.
+        </p>
+        <p>
+          Para ejercerlos, escribe a <a href={ENLACE_PRIVACIDAD}>{RESPONSABLE.correo}</a> con tu nombre, un medio para
+          contestarte, una copia de una identificación que acredite que eres tú o tu representante, y qué derecho
+          quieres ejercer y sobre cuáles datos. Si quieres una rectificación, dinos el dato correcto y acompáñalo de algo
+          que lo respalde. Te responderemos dentro de los plazos que marca la ley y sin costo, salvo los gastos de envío
+          o de reproducción, si los hubiera.
+        </p>
+        <p>
+          Hay casos en los que la ley nos permite no atender una solicitud, por ejemplo cuando necesitamos conservar
+          cierta información para cumplir una obligación fiscal. Si pasa, te explicaremos por qué.
+        </p>
+
+        <h2>9. Cuánto tiempo los guardamos</h2>
+        <p>
+          Los datos de quien pidió una demo y no contrató se conservan mientras haya una conversación comercial abierta y
+          hasta dos años después del último contacto. Los de clientes, mientras dure la relación y después por el plazo
+          que exijan las obligaciones fiscales y legales que apliquen.
+        </p>
+
+        <h2>10. Cambios a este aviso</h2>
+        <p>
+          Si cambia algo, publicaremos la versión nueva en esta misma dirección,{' '}
+          <a href={`${SITIO.dominio}/aviso-privacidad`}>{SITIO.dominio.replace('https://', '')}/aviso-privacidad</a>, con
+          su fecha de actualización. Cuando el cambio sea de fondo y tengamos cómo avisarte, te escribiremos. Conviene
+          revisar esta página de vez en cuando.
+        </p>
+
+        <h2>11. Si crees que no cumplimos</h2>
+        <p>
+          Escríbenos primero: lo más probable es que podamos resolverlo. Si no te deja satisfecho, puedes acudir a la
+          autoridad encargada de la protección de datos personales en posesión de particulares, que hoy es la{' '}
+          <strong>Secretaría Anticorrupción y Buen Gobierno</strong> del Gobierno de México.
+        </p>
+      </div>
+
+      <div class="acciones">
+        <a class="boton boton--secundario" href="/">Volver al inicio</a>
+      </div>
+    </div>
+  </main>
+
+  <Pie />
+</Base>

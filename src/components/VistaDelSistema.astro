@@ -1,0 +1,57 @@
+---
+import Icono from './Icono.astro'
+
+/** Una semana de ejemplo: cada barra dice en qué columna empieza y en cuál termina (2 = lunes). */
+const filas = [
+  { unidad: 'CAM-01', clase: 'barra--uso', desde: 2, hasta: 5, texto: 'Ana López · en uso' },
+  { unidad: 'SED-02', clase: 'barra--confirmada', desde: 5, hasta: 7, texto: 'Visita a cliente' },
+  { unidad: 'VAN-03', clase: 'barra--taller', desde: 2, hasta: 4, texto: 'Servicio 40,000 km' },
+  { unidad: 'RNT-04', clase: 'barra--renta', desde: 3, hasta: 9, texto: 'Renta · Carlos M.' },
+  { unidad: 'TRS-05', clase: 'barra--uso', desde: 4, hasta: 6, texto: 'Traslado aeropuerto' },
+]
+const dias = ['Lu 9', 'Ma 10', 'Mi 11', 'Ju 12', 'Vi 13', 'Sá 14', 'Do 15']
+---
+
+<div class="escena" role="img" aria-label="Ejemplo del sistema: el calendario de la semana con cinco unidades en uso, rentadas, en taller y reservadas, y avisos de lo que acaba de pasar.">
+  <div class="ventana" aria-hidden="true">
+    <div class="ventana__barra"><i></i><i></i><i></i><span>app.flotari.com.mx/calendario</span></div>
+    <div class="ventana__cuerpo">
+      <div class="ventana__menu"><i></i><i></i><i class="activo"></i><i></i><i></i><i></i></div>
+      <div class="semana">
+        <div class="semana__cabeza">
+          <strong>Calendario de la flotilla</strong>
+          <span>9 – 15 de noviembre</span>
+        </div>
+        <div class="semana__dias">
+          <span></span>
+          {dias.map((d, i) => <span class={i === 2 ? 'hoy' : undefined}>{d}</span>)}
+        </div>
+        <div class="filas">
+          {
+            filas.map((f) => (
+              <div class="fila">
+                <span class="fila__unidad">{f.unidad}</span>
+                <span class={`barra ${f.clase} desde-${f.desde} hasta-${f.hasta}`}>
+                  <span>{f.texto}</span>
+                </span>
+              </div>
+            ))
+          }
+          <span class="ahora"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flotante flotante--1" aria-hidden="true">
+    <span class="flotante__icono"><Icono nombre="circuloCheck" /></span>
+    <span><b>Ana recogió CAM-01</b><small>Odómetro 45,120 km · 9:02</small></span>
+  </div>
+  <div class="flotante flotante--2" aria-hidden="true">
+    <span class="flotante__icono"><Icono nombre="avion" /></span>
+    <span>
+      <b>Vuelo AM 512 · Terminal 2</b>
+      <small class="cambia"><span>El chofer va en camino</span><span>El chofer ya llegó</span></small>
+    </span>
+  </div>
+</div>

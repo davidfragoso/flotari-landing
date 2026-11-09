@@ -1,0 +1,16 @@
+---
+/**
+ * Recuadro ámbar de advertencia para las páginas legales. Solo se enseña
+ * mientras falte llenar o revisar algo; no debería verse en producción.
+ */
+interface Props {
+  titulo: string
+}
+
+const { titulo } = Astro.props
+---
+
+<div class="recuadro-pendiente" role="note">
+  <strong>{titulo}</strong>
+  <slot />
+</div>

@@ -1,0 +1,53 @@
+name: Desplegar a Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Si llegan dos pushes seguidos, cancela el viejo: nunca dos subidas a la vez.
+concurrency:
+  group: despliegue-produccion
+  cancel-in-progress: true
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Traer el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Compilar
+        run: npm run build
+
+      # Si el build sale incompleto, mejor fallar aquí que dejar
+      # el sitio a medias en producción.
+      - name: Revisar que el build esté completo
+        run: |
+          test -f dist/index.html || { echo 'Falta dist/index.html'; exit 1; }
+          test -f dist/.htaccess  || { echo 'Falta dist/.htaccess';  exit 1; }
+          test -d dist/_astro     || { echo 'Falta dist/_astro';     exit 1; }
+          echo "Archivos a subir: $(find dist -type f | wc -l)"
+
+      - name: Subir a public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVIDOR }}
+          username: ${{ secrets.FTP_USUARIO }}
+          password: ${{ secrets.FTP_CLAVE }}
+          # FTPS cifra la sesión; sin esto las credenciales viajan en claro.
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ./public_html/
+          # Compara contra la subida anterior y borra lo que ya no existe,
+          # así no se te acumulan los `_astro` viejos de cada build.
+          state-name: .despliegue-flotari.json

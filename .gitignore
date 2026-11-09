@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# paquete de despliegue manual (lo regenera el build)
+flotari-dist.zip

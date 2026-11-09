@@ -1,0 +1,97 @@
+---
+import Icono from './Icono.astro'
+import { codificarQr, rutaSvg } from '../lib/codigoQr'
+import { SITIO } from '../sitio'
+
+// Un QR de verdad, armado al compilar con el mismo codificador del sistema: si alguien lo escanea, abre la landing.
+const qr = rutaSvg(codificarQr(SITIO.dominio), 2)
+---
+
+<div class="bento">
+  <article class="celda" data-aparece>
+    <div class="icono"><Icono nombre="calendario" /></div>
+    <h3>Una unidad, una persona a la vez</h3>
+    <p>Reservas, rentas, traslados y taller comparten el mismo calendario. Si una camioneta ya está ocupada, el sistema no deja apartarla y te dice con qué choca.</p>
+    <div class="celda__visual choque" aria-hidden="true">
+      <div class="choque__fila"><span class="choque__a">CAM-01 · Ana López</span><span class="choque__b">Nueva reserva</span></div>
+      <div class="choque__nota"><Icono nombre="equis" /> Ocupada del lunes 9:00 al miércoles 18:00</div>
+    </div>
+  </article>
+
+  <article class="celda" data-aparece>
+    <div class="icono"><Icono nombre="camara" /></div>
+    <h3>Inspecciones con fotos y firma</h3>
+    <p>Si algo no pasa, la incidencia se levanta sola o la unidad entra al taller.</p>
+    <div class="celda__visual" aria-hidden="true">
+      <ul class="checklist">
+        <li><Icono nombre="check" clase="ok" /> Luces</li>
+        <li><Icono nombre="check" clase="ok" /> Documentos</li>
+        <li><Icono nombre="equis" clase="mal" /> Llantas</li>
+      </ul>
+      <p class="checklist__resultado"><span class="chip chip--rojo">Incidencia INC-0042</span></p>
+    </div>
+  </article>
+
+  <article class="celda" data-aparece>
+    <div class="icono"><Icono nombre="grafica" /></div>
+    <h3>Cuánto te cuesta cada unidad</h3>
+    <p>Combustible, taller, gastos e incidencias por kilómetro. Se exporta a Excel.</p>
+    <div class="celda__visual barras" aria-hidden="true">
+      <div><span>SED-02</span><i class="ancho-48"></i><span>$2.10</span></div>
+      <div><span>CAM-01</span><i class="ancho-64"></i><span>$2.85</span></div>
+      <div class="caro"><span>VAN-03</span><i class="ancho-92"></i><span>$4.40</span></div>
+    </div>
+  </article>
+
+  <article class="celda" data-aparece>
+    <div class="icono"><Icono nombre="qr" /></div>
+    <h3>Un QR en cada unidad</h3>
+    <p>Lo escaneas con la cámara y caes en tu reserva, listo para recoger o regresar.</p>
+    <div class="celda__visual qr">
+      <div class="qr__codigo">
+        <svg viewBox={`0 0 ${qr.lado} ${qr.lado}`} role="img" aria-label={`Código QR que abre ${SITIO.dominio}`} shape-rendering="crispEdges">
+          <path d={qr.d} fill="#000" />
+        </svg>
+      </div>
+      <p><strong>Pruébalo:</strong> escanéalo con tu celular.</p>
+    </div>
+  </article>
+
+  <article class="celda" data-aparece>
+    <div class="icono"><Icono nombre="documento" /></div>
+    <h3>Nada se vence sin aviso</h3>
+    <p>Seguro, verificación, tarjeta de circulación y licencias, y el sistema te avisa antes de la fecha.</p>
+    <div class="celda__visual vencen" aria-hidden="true">
+      <div><span>Seguro · PIC-04</span><span class="chip chip--rojo">6 días</span></div>
+      <div><span>Verificación · SED-02</span><span class="chip chip--ambar">24 días</span></div>
+      <div><span>Licencia · Luis R.</span><span class="chip chip--verde">Vigente</span></div>
+    </div>
+  </article>
+
+  <article class="celda" data-aparece>
+    <div class="icono"><Icono nombre="celular" /></div>
+    <h3>Tus choferes, desde el celular</h3>
+    <p>Se instala como app. Ven su día y reportan cargas, gastos e incidencias en segundos. Sus reservas aparecen solas en Google Calendar u Outlook.</p>
+    <div class="celda__visual" aria-hidden="true">
+      <div class="celular">
+        <div class="celular__pantalla">
+          <b>Buen día, Luis</b>
+          <span>Hoy: CAM-01 · 9:00 a 18:00</span>
+          <div class="celular__atajo"><i></i>Cargué combustible</div>
+          <div class="celular__atajo"><i></i>Registrar un gasto</div>
+          <div class="celular__atajo"><i></i>Reportar un problema</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="celda" data-aparece>
+    <div class="icono"><Icono nombre="escudo" /></div>
+    <h3>Control y seguridad</h3>
+    <p>Cada empresa ve solo lo suyo y cada persona, lo que su rol permite. Bitácora de cada cambio, verificación en dos pasos y tus datos completos para descargar cuando quieras.</p>
+    <div class="celda__visual vencen" aria-hidden="true">
+      <div><span>Ana canceló una reserva de CAM-01</span><span class="chip chip--azul">Bitácora</span></div>
+      <div><span>Verificación en dos pasos</span><span class="chip chip--verde">Activa</span></div>
+    </div>
+  </article>
+</div>

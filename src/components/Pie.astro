@@ -1,0 +1,28 @@
+---
+import { SITIO } from '../sitio'
+
+interface Props {
+  /** En la portada los enlaces de sección son ancla; fuera de ella, absolutos. */
+  enPortada?: boolean
+}
+
+const { enPortada = false } = Astro.props
+const raiz = enPortada ? '' : '/'
+---
+
+<footer class="pie">
+  <div class="contenedor pie__fila">
+    <a class="logo" href="/" aria-label={`${SITIO.nombre}, inicio`}>
+      <img src="/flotari-icono.png" alt="" width="28" height="28" />
+      {SITIO.nombre}
+    </a>
+    <nav aria-label="Pie de página">
+      <a href={`${raiz}#giros`}>Giros</a>
+      <a href={`${raiz}#funciones`}>Funciones</a>
+      <a href="/aviso-privacidad/">Aviso de privacidad</a>
+      <a href="/terminos/">Términos</a>
+      <a href={`${SITIO.app}/entrar`}>Entrar al sistema</a>
+    </nav>
+    <span>© {new Date().getFullYear()} {SITIO.nombre}</span>
+  </div>
+</footer>

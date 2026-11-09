@@ -1,0 +1,24 @@
+---
+import Icono from './Icono.astro'
+
+/**
+ * El aviso en corto, puesto donde de verdad se recaban datos: junto a los
+ * botones que abren WhatsApp o el correo. La ley pide que el aviso esté a la
+ * mano al momento de recabar, y aquí no se recaba nada por el solo hecho de
+ * entrar: la landing no tiene formularios ni cookies.
+ */
+interface Props {
+  /** Clases extra, para encadenarlo a la entrada escalonada de la portada. */
+  clase?: string
+}
+
+const { clase = '' } = Astro.props
+---
+
+<p class:list={['nota-privacidad', clase]}>
+  <Icono nombre="candado" />
+  <span>
+    Al escribirnos usamos tus datos solo para contactarte y darte la demo.{' '}
+    <a href="/aviso-privacidad/">Aviso de privacidad</a>.
+  </span>
+</p>

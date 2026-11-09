@@ -1,0 +1,5 @@
+# Flotari — landing
+User-agent: *
+Allow: /
+
+Sitemap: https://flotari.com.mx/sitemap.xml

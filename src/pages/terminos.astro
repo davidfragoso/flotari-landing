@@ -1,0 +1,250 @@
+---
+import Base from '../layouts/Base.astro'
+import Pie from '../components/Pie.astro'
+import Recuadro from '../components/Recuadro.astro'
+import { CONTRATO, RESPONSABLE, SITIO, TERMINOS_EN_BORRADOR } from '../sitio'
+
+if (TERMINOS_EN_BORRADOR) {
+  console.warn(
+    '\n  TÉRMINOS EN BORRADOR: nadie con título de abogado los ha revisado.' +
+      '\n  Revisa CONTRATO en src/sitio.ts y pon TERMINOS_EN_BORRADOR en false.\n',
+  )
+}
+
+const fecha = new Date(`${CONTRATO.actualizado}T12:00:00Z`).toLocaleDateString('es-MX', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+})
+---
+
+<Base
+  titulo={`Términos y condiciones · ${SITIO.nombre}`}
+  descripcion={`Las reglas del servicio de ${SITIO.nombre}: cuenta, prueba, pagos, uso permitido, datos, garantías y cancelación.`}
+>
+  <header class="encabezado">
+    <div class="contenedor encabezado__fila">
+      <a class="logo" href="/" aria-label={`${SITIO.nombre}, inicio`}>
+        <img src="/flotari-icono.png" alt="" width="34" height="34" />
+        {SITIO.nombre}
+      </a>
+      <nav class="menu" aria-label="Principal">
+        <a href="/">Inicio</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="seccion">
+    <div class="contenedor">
+      <p class="antetitulo">Legal</p>
+      <h1 class="titulo-seccion">Términos y condiciones</h1>
+      <p class="entrada">
+        Última actualización: {fecha}. Estas son las reglas con las que {SITIO.nombre} se contrata y se usa.
+      </p>
+
+      {
+        TERMINOS_EN_BORRADOR && (
+          <Recuadro titulo="Esto es un machote, no un contrato terminado.">
+            <p>
+              Lo escribió una herramienta, no un abogado. Los números y lugares salen de <code>CONTRATO</code> en{' '}
+              <code>src/sitio.ts</code>: revísalos uno por uno. Varias cláusulas —el límite de responsabilidad y la
+              renuncia de garantías, sobre todo— tienen topes bajo la ley mexicana y hay que ajustarlas. Cuando un
+              abogado lo revise, pon <code>TERMINOS_EN_BORRADOR</code> en <code>false</code> y este recuadro se va.
+            </p>
+          </Recuadro>
+        )
+      }
+
+      <div class="prosa">
+        <h2>1. De qué se trata esto</h2>
+        <p>
+          {SITIO.nombre} es un sistema en línea para administrar flotillas de vehículos: reservas, traslados, renta,
+          mantenimiento, documentos, combustible y gastos. Lo presta{' '}
+          <strong>{RESPONSABLE.nombre}</strong>, con domicilio en {RESPONSABLE.domicilio}, a quien estos términos
+          llaman «nosotros». A quien contrata el servicio lo llaman «el cliente» o «tú».
+        </p>
+        <p>
+          Al crear una cuenta, usar el sistema o empezar la prueba, aceptas estos términos. Si contratas a nombre de
+          una empresa, declaras que tienes facultades para obligarla.
+        </p>
+        <p>
+          El servicio está dirigido a empresas y a personas con actividad empresarial, no a consumidores finales.
+        </p>
+
+        <h2>2. La cuenta</h2>
+        <ul>
+          <li>Los datos que registres deben ser verdaderos y mantenerse actualizados.</li>
+          <li>
+            Cada persona usa su propia cuenta. Las contraseñas no se comparten, y lo que pase con tus credenciales es
+            responsabilidad tuya. Si sospechas que alguien entró sin permiso, avísanos de inmediato.
+          </li>
+          <li>
+            Quien administre la cuenta de tu empresa decide quién entra, con qué rol y hasta dónde ve. Esa
+            administración es tuya, no nuestra.
+          </li>
+          <li>Recomendamos dejar prendida la verificación en dos pasos.</li>
+        </ul>
+
+        <h2>3. La prueba sin costo</h2>
+        <p>
+          La prueba dura <strong>{CONTRATO.diasDePrueba} días</strong> con todas las funciones y sin tarjeta de
+          crédito. Al terminar, si no contratas, la cuenta se suspende y puedes descargar tu información durante los{' '}
+          {CONTRATO.diasParaDescargar} días siguientes. Una empresa puede usar la prueba una sola vez.
+        </p>
+
+        <h2>4. Precios y pagos</h2>
+        <p>
+          El precio depende del plan, de cuántas unidades y personas usen el sistema y de qué giros tengas prendidos.
+          Lo que acordemos queda por escrito en la cotización o en el pedido que firmes, y eso manda sobre cualquier
+          precio de referencia.
+        </p>
+        <ul>
+          <li>Los precios están en pesos mexicanos y no incluyen IVA, salvo que se diga lo contrario.</li>
+          <li>El cobro es por adelantado, por el periodo contratado.</li>
+          <li>
+            Si un pago se atrasa más de {CONTRATO.diasParaSuspender} días, podemos suspender el acceso tras avisarte
+            por escrito. Suspender no cancela lo que ya se debe.
+          </li>
+          <li>
+            Podemos cambiar los precios para el siguiente periodo avisando con al menos {CONTRATO.diasParaCancelar}{' '}
+            días. Si no te acomoda, puedes no renovar.
+          </li>
+        </ul>
+
+        <h2>5. Qué puedes hacer y qué no</h2>
+        <p>Te damos el derecho de usar el sistema para tu operación mientras tu cuenta esté al corriente. No puedes:</p>
+        <ul>
+          <li>revenderlo, rentarlo ni darle acceso a terceros ajenos a tu empresa;</li>
+          <li>intentar sacarle el código, copiarlo o hacer uno derivado;</li>
+          <li>
+            cargarle contenido ilegal, ni datos de personas sin que tengas derecho a tratarlos, ni programas dañinos;
+          </li>
+          <li>
+            hacerle pruebas de carga, de intrusión o de seguridad sin permiso nuestro por escrito —si encuentras una
+            falla, repórtala y te lo agradeceremos—;
+          </li>
+          <li>usarlo de modo que afecte el servicio de los demás clientes.</li>
+        </ul>
+
+        <h2>6. Disponibilidad y soporte</h2>
+        <p>
+          Hacemos lo razonable para que el sistema esté disponible todo el tiempo, pero no prometemos que nunca se
+          caiga. El mantenimiento programado se avisa con anticipación y se procura en horarios de poco uso.
+        </p>
+        <p>
+          El soporte se da por correo y por WhatsApp en días y horas hábiles. Si tu plan incluye un compromiso de
+          disponibilidad o de tiempo de respuesta, va por escrito en tu contrato; sin eso, no hay nivel de servicio
+          garantizado.
+        </p>
+
+        <h2>7. Tus datos</h2>
+        <p>
+          <strong>La información que cargues sigue siendo tuya.</strong> Nosotros la tratamos solo para darte el
+          servicio y según tus instrucciones, como encargados. No la usamos para fines propios ni la vendemos.
+        </p>
+        <ul>
+          <li>
+            Puedes exportar toda tu información desde el sistema cuando quieras, sin pedir permiso y sin costo.
+          </li>
+          <li>
+            Si cargas datos de tus empleados, choferes o clientes, tú eres el responsable frente a ellos: te toca
+            tener su consentimiento y darles tu propio aviso de privacidad.
+          </li>
+          <li>
+            Al terminar la relación conservamos tu información {CONTRATO.diasParaDescargar} días para que la
+            descargues, y después la borramos, salvo lo que la ley nos obligue a guardar.
+          </li>
+          <li>
+            Podemos usar datos agregados y anonimizados —que no identifican a nadie ni a tu empresa— para medir y
+            mejorar el producto.
+          </li>
+        </ul>
+        <p>
+          Cómo tratamos los datos personales se explica en el <a href="/aviso-privacidad/">aviso de privacidad</a>.
+        </p>
+
+        <h2>8. De quién es el sistema</h2>
+        <p>
+          El software, el nombre {SITIO.nombre}, el logotipo, el diseño y la documentación son nuestros. Contratar el
+          servicio te da permiso de usarlo, no te transfiere la propiedad de nada. Si nos mandas sugerencias, podemos
+          aplicarlas sin deberte nada por ello.
+        </p>
+
+        <h2>9. Confidencialidad</h2>
+        <p>
+          Cada parte guarda como confidencial lo que la otra le comparta y que no sea público, y lo usa solo para lo
+          que hace falta en esta relación. La obligación sigue viva dos años después de que termine. No aplica a lo que
+          ya era público, a lo que se supiera antes, ni a lo que haya que entregar por orden de autoridad.
+        </p>
+
+        <h2>10. Garantías y responsabilidad</h2>
+        <p>
+          El sistema se presta tal como está. No garantizamos que vaya a estar libre de errores ni que sirva para un
+          propósito particular distinto del descrito.
+        </p>
+        <p>
+          Salvo por dolo o mala fe, nuestra responsabilidad total frente a ti se limita a lo que nos hayas pagado en
+          los <strong>{CONTRATO.mesesDeTope} meses</strong> anteriores al hecho que la origine. No respondemos por
+          lucro cesante, pérdida de oportunidades ni daños indirectos.
+        </p>
+        <p>
+          El sistema es una herramienta de apoyo: no sustituye tus obligaciones legales, fiscales, laborales ni de
+          seguridad. Las decisiones de operación son tuyas.
+        </p>
+
+        <h2>11. Vigencia y cancelación</h2>
+        <ul>
+          <li>
+            El servicio se contrata por periodos que se renuevan solos, salvo que avises que no quieres renovar con al
+            menos {CONTRATO.diasParaCancelar} días de anticipación.
+          </li>
+          <li>
+            Puedes cancelar cuando quieras. La cancelación surte efecto al terminar el periodo que ya pagaste, y no
+            devolvemos lo pagado por adelantado salvo que la ley lo exija.
+          </li>
+          <li>
+            Podemos terminar el contrato si incumples de forma grave y no lo corriges dentro de los 15 días siguientes
+            a nuestro aviso por escrito.
+          </li>
+        </ul>
+
+        <h2>12. Cambios</h2>
+        <p>
+          El sistema se actualiza seguido; agregamos funciones y a veces quitamos las que nadie usa. Si un cambio te
+          quita algo importante, avisamos con anticipación razonable.
+        </p>
+        <p>
+          Estos términos también pueden cambiar. La versión vigente siempre está en{' '}
+          <a href={`${SITIO.dominio}/terminos/`}>{SITIO.dominio.replace('https://', '')}/terminos/</a>. Si el cambio es
+          de fondo, te avisamos al menos {CONTRATO.diasParaCancelar} días antes de que aplique; seguir usando el
+          servicio después de esa fecha cuenta como aceptación.
+        </p>
+
+        <h2>13. Caso fortuito y fuerza mayor</h2>
+        <p>
+          Ninguna de las partes responde por incumplir cuando la causa está fuera de su control razonable: desastres
+          naturales, cortes de energía o de internet, fallas de proveedores de infraestructura, actos de autoridad o
+          conflictos sociales.
+        </p>
+
+        <h2>14. Ley aplicable y tribunales</h2>
+        <p>
+          Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Para cualquier controversia, ambas
+          partes se someten a los tribunales competentes de <strong>{CONTRATO.jurisdiccion}</strong>, renunciando a
+          cualquier otro fuero que pudiera corresponderles.
+        </p>
+
+        <h2>15. Contacto</h2>
+        <p>
+          Para cualquier duda sobre estos términos, escríbenos a <a href={`mailto:${SITIO.correo}`}>{SITIO.correo}</a>.
+        </p>
+      </div>
+
+      <div class="acciones">
+        <a class="boton boton--secundario" href="/">Volver al inicio</a>
+      </div>
+    </div>
+  </main>
+
+  <Pie />
+</Base>

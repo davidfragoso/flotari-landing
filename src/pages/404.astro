@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro'
+import Pie from '../components/Pie.astro'
+import { SITIO } from '../sitio'
+---
+
+<Base titulo={`Página no encontrada · ${SITIO.nombre}`} descripcion="Esta página no existe." indexar={false}>
+  <main id="contenido" class="seccion">
+    <div class="contenedor">
+      <h1 class="titulo-seccion">Esta página no existe</h1>
+      <p class="entrada">Puede que el enlace esté mal escrito. ¿Buscabas el sistema?</p>
+      <div class="acciones">
+        <a class="boton boton--principal" href="/">Ir al inicio</a>
+        <a class="boton boton--secundario" href={`${SITIO.app}/entrar`}>Entrar al sistema</a>
+      </div>
+    </div>
+  </main>
+
+  <Pie />
+</Base>

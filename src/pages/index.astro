@@ -1,16 +1,254 @@
 ---
+import Base from '../layouts/Base.astro'
+import Icono from '../components/Icono.astro'
+import VistaDelSistema from '../components/VistaDelSistema.astro'
+import Funciones from '../components/Funciones.astro'
+import Pie from '../components/Pie.astro'
+import NotaPrivacidad from '../components/NotaPrivacidad.astro'
+import { ENLACE_CORREO, ENLACE_WHATSAPP, SITIO } from '../sitio'
+
+const franja = [
+  { icono: 'llave', texto: 'Reservas' },
+  { icono: 'ruta', texto: 'Traslados' },
+  { icono: 'contrato', texto: 'Renta' },
+  { icono: 'herramienta', texto: 'Taller' },
+  { icono: 'documento', texto: 'Documentos' },
+  { icono: 'combustible', texto: 'Combustible y gastos' },
+] as const
+
+const preguntas = [
+  {
+    p: '¿Tengo que instalar algo?',
+    r: 'No. Funciona en el navegador de la computadora y del celular. En el celular se instala como app para abrirlo directo, sin pasar por la tienda.',
+  },
+  {
+    p: '¿Sirve si tengo pocas unidades?',
+    r: 'Sí. Está pensado para flotillas pequeñas y medianas: desde unas cuantas unidades hasta varias decenas, con una o varias sedes.',
+  },
+  {
+    p: '¿Puedo usar solo una parte, por ejemplo solo la renta?',
+    r: 'Sí. Prendes los giros que usas —reservas, traslados o renta— y el menú enseña solo eso. El control de la flotilla (taller, documentos, combustible y gastos) viene en todos.',
+  },
+  {
+    p: '¿Cuánto cuesta?',
+    r: 'Depende de cuántas unidades y personas lo usen y de qué giros necesites. En la demo vemos tu caso y te pasamos la cotización.',
+  },
+  {
+    p: '¿Quién ve mis datos?',
+    r: 'Solo tu empresa, y dentro de ella cada persona ve lo que su rol le permite. Puedes descargar toda tu información en cualquier momento.',
+  },
+  {
+    p: '¿Cómo cargo lo que ya tengo?',
+    r: 'Unidades y personas se importan desde un archivo de Excel guardado como CSV. A las personas les llega una invitación para crear su contraseña.',
+  },
+] as const
+
+const titulo = `${SITIO.nombre} · Reservas, traslados y renta de vehículos`
+const descripcion =
+  'Sistema para administrar tu flotilla: reservas de unidades, traslados con chofer y renta de vehículos, con mantenimiento, documentos, combustible y gastos en un solo lugar.'
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base titulo={titulo} descripcion={descripcion}>
+  <header class="encabezado">
+    <div class="contenedor encabezado__fila">
+      <a class="logo" href="/" aria-label={`${SITIO.nombre}, inicio`}>
+        <img src="/flotari-icono.png" alt="" width="34" height="34" />
+        {SITIO.nombre}
+      </a>
+      <nav class="menu" aria-label="Principal">
+        <a href="#giros">Giros</a>
+        <a href="#funciones">Funciones</a>
+        <a href="#preguntas">Preguntas</a>
+        <a class="boton boton--principal boton--chico" href={ENLACE_WHATSAPP}>Pide una demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="portada">
+      <div class="portada__fondo" aria-hidden="true"><span class="mancha mancha--1"></span><span class="mancha mancha--2"></span></div>
+      <div class="contenedor portada__rejilla">
+        <div>
+          <p class="insignia llega i0"><b>Hecho en México</b> Reservas, traslados y renta en un solo sistema</p>
+          <h1 class="llega i1">Tu flotilla,<br /><span class="degradado">en orden.</span></h1>
+          <p class="portada__texto llega i2">
+            Quién trae qué unidad, cuándo regresa, cuándo le toca servicio y qué documento está por vencer. Todo a la vista, desde la
+            computadora o el celular.
+          </p>
+          <div class="acciones llega i3">
+            <a class="boton boton--principal" href={ENLACE_WHATSAPP}>Pide una demo <Icono nombre="flecha" /></a>
+            <a class="boton boton--secundario" href={ENLACE_CORREO}>Escríbenos un correo</a>
+          </div>
+          <ul class="garantias llega i4">
+            <li><Icono nombre="circuloCheck" /> 14 días de prueba con todo</li>
+            <li><Icono nombre="circuloCheck" /> Sin instalar nada</li>
+            <li><Icono nombre="circuloCheck" /> Tus datos, siempre tuyos</li>
+          </ul>
+          <NotaPrivacidad clase="llega i5" />
+        </div>
+        <VistaDelSistema />
+      </div>
+    </section>
+
+    <div class="franja">
+      <ul class="contenedor" aria-label="Lo que administra">
+        {franja.map((f) => <li><Icono nombre={f.icono} />{f.texto}</li>)}
+      </ul>
+    </div>
+
+    <section id="giros" class="seccion">
+      <div class="contenedor">
+        <div class="centrado" data-aparece>
+          <p class="antetitulo">Un sistema, tres giros</p>
+          <h2 class="titulo-seccion">Usa solo lo que tu negocio necesita</h2>
+          <p class="entrada">Prende uno, dos o los tres. Comparten las mismas unidades, así que una camioneta rentada nunca aparece libre para un traslado.</p>
+          <div class="pestanas" role="tablist" aria-label="Giros">
+            <span class="pestanas__marca" aria-hidden="true"></span>
+            <button type="button" role="tab" id="tab-reservas" aria-controls="panel-reservas" aria-selected="true"><Icono nombre="llave" />Reservas</button>
+            <button type="button" role="tab" id="tab-traslados" aria-controls="panel-traslados" aria-selected="false" tabindex="-1"><Icono nombre="ruta" />Traslados</button>
+            <button type="button" role="tab" id="tab-renta" aria-controls="panel-renta" aria-selected="false" tabindex="-1"><Icono nombre="contrato" />Renta</button>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-reservas" role="tabpanel" aria-labelledby="tab-reservas" tabindex="0" data-aparece>
+          <div>
+            <h3>Reservas de unidades</h3>
+            <p>Para empresas que prestan vehículos a su personal: cada quien aparta, recoge y regresa, y tú sabes en todo momento dónde está cada unidad.</p>
+            <ul class="lista-check">
+              <li><Icono nombre="circuloCheck" />Calendario por unidad, sin dos personas en el mismo carro</li>
+              <li><Icono nombre="circuloCheck" />Aprobación opcional y reservas a nombre de otra persona</li>
+              <li><Icono nombre="circuloCheck" />Recoger y regresar con odómetro, combustible e inspección</li>
+            </ul>
+          </div>
+          <div class="maqueta" aria-hidden="true">
+            <div class="ficha">
+              <div class="ficha__cabeza"><strong>Reserva R-0193</strong><span class="chip chip--azul">Confirmada</span></div>
+              <dl>
+                <dt>Unidad</dt><dd>CAM-01 · NP300</dd>
+                <dt>Quién</dt><dd>Ana López</dd>
+                <dt>Sale</dt><dd>Lun 9:00</dd>
+                <dt>Regresa</dt><dd>Mié 18:00</dd>
+              </dl>
+              <div class="ficha__pie"><span>Recoger vehículo</span><span>Ver horario</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-traslados" role="tabpanel" aria-labelledby="tab-traslados" tabindex="0">
+          <div>
+            <h3>Traslados con chofer</h3>
+            <p>Para quien mueve pasajeros: aeropuerto, hotel o empresa. Choferes y unidades sin traslapes, y el pasajero siempre sabe qué está pasando.</p>
+            <ul class="lista-check">
+              <li><Icono nombre="circuloCheck" />Agenda de choferes y unidades que no se encima</li>
+              <li><Icono nombre="circuloCheck" />Vuelo, terminal y letrero con el nombre del pasajero</li>
+              <li><Icono nombre="circuloCheck" />Correos al pasajero: confirmado, va en camino y ya llegó</li>
+            </ul>
+          </div>
+          <div class="maqueta" aria-hidden="true">
+            <div class="letrero"><b>Laura Méndez</b><span>Vuelo AM 512 · Terminal 2</span></div>
+            <div class="aviso-movil">
+              <span class="flotante__icono"><Icono nombre="campana" /></span>
+              <span><b>Tu chofer ya llegó</b>Luis te espera en la salida de la Terminal 2.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-renta" role="tabpanel" aria-labelledby="tab-renta" tabindex="0">
+          <div>
+            <h3>Renta de vehículos</h3>
+            <p>Para arrendadoras: del apartado a la devolución, con el contrato, los pagos y el estado de la unidad documentados.</p>
+            <ul class="lista-check">
+              <li><Icono nombre="circuloCheck" />Contratos con depósito, anticipos y saldo</li>
+              <li><Icono nombre="circuloCheck" />Entrega y recepción con fotos y firma en pantalla</li>
+              <li><Icono nombre="circuloCheck" />Cargos de combustible y kilómetros sugeridos al recibir</li>
+            </ul>
+          </div>
+          <div class="maqueta" aria-hidden="true">
+            <div class="ficha">
+              <div class="ficha__cabeza"><strong>Contrato RNT-0087</strong><span class="chip chip--verde">Entregado</span></div>
+              <dl>
+                <dt>Unidad</dt><dd>RNT-04 · Versa</dd>
+                <dt>Cliente</dt><dd>Carlos Martínez</dd>
+                <dt>Renta</dt><dd>3 días × $650</dd>
+                <dt>Depósito</dt><dd>$3,000</dd>
+              </dl>
+              <div class="ficha__pie"><span>Recibir unidad</span><span>Imprimir</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="funciones" class="seccion">
+      <div class="contenedor">
+        <div data-aparece>
+          <p class="antetitulo">El control de la flotilla</p>
+          <h2 class="titulo-seccion">Todo lo que le pasa a cada unidad, en un solo lugar</h2>
+          <p class="entrada">Viene en todos los giros. Es lo que hoy vive en hojas de Excel, grupos de WhatsApp y la memoria de alguien.</p>
+        </div>
+        <Funciones />
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="centrado" data-aparece>
+          <p class="antetitulo">Cómo empezamos</p>
+          <h2 class="titulo-seccion">De la demo a usarlo, en días</h2>
+        </div>
+        <ol class="pasos" data-aparece>
+          <li class="paso">
+            <span class="paso__numero">1</span>
+            <h3>Te lo enseñamos</h3>
+            <p>Una llamada de 30 minutos con una flotilla de ejemplo, enfocada en cómo trabajas tú.</p>
+          </li>
+          <li class="paso">
+            <span class="paso__numero">2</span>
+            <h3>Cargamos tu flotilla</h3>
+            <p>Importamos tus unidades y tu gente desde Excel, y dejamos giros, horarios y permisos listos.</p>
+          </li>
+          <li class="paso">
+            <span class="paso__numero">3</span>
+            <h3>Lo usas de prueba</h3>
+            <p>Catorce días con todas las funciones, con tu operación real, antes de decidir.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="preguntas" class="seccion">
+      <div class="contenedor">
+        <div class="centrado" data-aparece>
+          <p class="antetitulo">Preguntas frecuentes</p>
+          <h2 class="titulo-seccion">Lo que suelen preguntarnos</h2>
+        </div>
+        <div class="preguntas" data-aparece>
+          {
+            preguntas.map((q) => (
+              <details>
+                <summary>{q.p}</summary>
+                <p>{q.r}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="cierre" data-aparece>
+          <h2>¿Lo vemos con tu flotilla?</h2>
+          <p>Cuéntanos cuántas unidades tienes y a qué te dedicas. En 30 minutos te enseñamos cómo se vería tu operación.</p>
+          <div class="acciones">
+            <a class="boton boton--principal" href={ENLACE_WHATSAPP}>Pide una demo por WhatsApp <Icono nombre="flecha" /></a>
+            <a class="boton boton--secundario" href={ENLACE_CORREO}>{SITIO.correo}</a>
+          </div>
+          <NotaPrivacidad />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Pie enPortada />
+</Base>
