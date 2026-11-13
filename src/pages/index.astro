@@ -140,15 +140,24 @@ const descripcion =
             <p>Para quien mueve pasajeros: aeropuerto, hotel o empresa. Choferes y unidades sin traslapes, y el pasajero siempre sabe qué está pasando.</p>
             <ul class="lista-check">
               <li><Icono nombre="circuloCheck" />Agenda de choferes y unidades que no se encima</li>
-              <li><Icono nombre="circuloCheck" />Vuelo, terminal y letrero con el nombre del pasajero</li>
-              <li><Icono nombre="circuloCheck" />Correos al pasajero: confirmado, va en camino y ya llegó</li>
+              <li><Icono nombre="circuloCheck" />Correo de confirmación al pasajero con hora, chofer, unidad y ruta</li>
+              <li><Icono nombre="circuloCheck" />No deja arrancar el traslado si la licencia del chofer está vencida</li>
             </ul>
           </div>
-          <div class="maqueta" aria-hidden="true">
-            <div class="letrero"><b>Laura Méndez</b><span>Vuelo AM 512 · Terminal 2</span></div>
+          <div class="maqueta maqueta--apilada" aria-hidden="true">
+            <div class="ficha">
+              <div class="ficha__cabeza"><strong>Traslado T-0241</strong><span class="chip chip--azul">Programado</span></div>
+              <dl>
+                <dt>Cliente</dt><dd>Hotel Riviera</dd>
+                <dt>Chofer</dt><dd>Luis Ramírez · TRS-05</dd>
+                <dt>Ruta</dt><dd>Aeropuerto → Hotel</dd>
+                <dt>Pasajeros</dt><dd>3 · Tarifa $1,150</dd>
+              </dl>
+              <div class="ficha__pie"><span>Iniciar traslado</span><span>Ver orden</span></div>
+            </div>
             <div class="aviso-movil">
               <span class="flotante__icono"><Icono nombre="campana" /></span>
-              <span><b>Tu chofer ya llegó</b>Luis te espera en la salida de la Terminal 2.</span>
+              <span><b>Nuevo traslado asignado</b>Luis lo ve en su celular, con unidad, hora y ruta.</span>
             </div>
           </div>
         </div>

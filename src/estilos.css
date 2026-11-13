@@ -597,6 +597,11 @@ p { margin: 0; }
 }
 .aviso-movil b { display: block; font-size: 0.8125rem; }
 .aviso-movil .flotante__icono { width: 30px; height: 30px; border-radius: 9px; background: var(--verde-fondo); color: var(--verde); }
+/* La maqueta de Traslados lleva ficha, que es mas alta que el letrero que
+   vivia ahi antes: el aviso ya no cabe encima. Se apila debajo, que es lo que
+   esta misma hoja ya hace en movil. Va en el flujo, asi que la rejilla de
+   .maqueta le da su propia fila y place-items lo centra. */
+.maqueta--apilada .aviso-movil { position: static; width: min(100%, 300px); margin-top: 14px; }
 @media (max-width: 560px) { .aviso-movil { position: static; width: 100%; margin-top: 14px; } .maqueta { place-items: stretch; } .letrero { rotate: 0deg; width: 100%; } }
 
 /* --------------------------------------------------------------------------

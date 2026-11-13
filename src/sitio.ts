@@ -4,7 +4,7 @@ export const SITIO = {
   /** Donde vive el sistema (el VPS). */
   app: 'https://app.flotari.com.mx',
   /** Con lada de país y sin signos: 52 + 10 dígitos. */
-  whatsapp: '529987906989',
+  whatsapp: '529983849659',
   correo: 'administrador@flotari.com.mx',
 }
 

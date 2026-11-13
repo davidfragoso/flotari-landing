@@ -1,10 +1,5 @@
 ---
 import Icono from './Icono.astro'
-import { codificarQr, rutaSvg } from '../lib/codigoQr'
-import { SITIO } from '../sitio'
-
-// Un QR de verdad, armado al compilar con el mismo codificador del sistema: si alguien lo escanea, abre la landing.
-const qr = rutaSvg(codificarQr(SITIO.dominio), 2)
 ---
 
 <div class="bento">
@@ -44,16 +39,13 @@ const qr = rutaSvg(codificarQr(SITIO.dominio), 2)
   </article>
 
   <article class="celda" data-aparece>
-    <div class="icono"><Icono nombre="qr" /></div>
-    <h3>Un QR en cada unidad</h3>
-    <p>Lo escaneas con la cámara y caes en tu reserva, listo para recoger o regresar.</p>
-    <div class="celda__visual qr">
-      <div class="qr__codigo">
-        <svg viewBox={`0 0 ${qr.lado} ${qr.lado}`} role="img" aria-label={`Código QR que abre ${SITIO.dominio}`} shape-rendering="crispEdges">
-          <path d={qr.d} fill="#000" />
-        </svg>
-      </div>
-      <p><strong>Pruébalo:</strong> escanéalo con tu celular.</p>
+    <div class="icono"><Icono nombre="herramienta" /></div>
+    <h3>El taller, antes de que truene</h3>
+    <p>Planes de servicio por kilómetros o por fecha: el sistema te dice a cuánto está cada unidad del siguiente. Mientras está en el taller, nadie la puede apartar.</p>
+    <div class="celda__visual vencen" aria-hidden="true">
+      <div><span>Servicio mayor · CAM-01</span><span class="chip chip--rojo">en 420 km</span></div>
+      <div><span>Servicio menor · SED-02</span><span class="chip chip--ambar">en 1,800 km</span></div>
+      <div><span>VAN-03 · en taller</span><span class="chip chip--azul">No disponible</span></div>
     </div>
   </article>
 
@@ -71,7 +63,7 @@ const qr = rutaSvg(codificarQr(SITIO.dominio), 2)
   <article class="celda" data-aparece>
     <div class="icono"><Icono nombre="celular" /></div>
     <h3>Tus choferes, desde el celular</h3>
-    <p>Se instala como app. Ven su día y reportan cargas, gastos e incidencias en segundos. Sus reservas aparecen solas en Google Calendar u Outlook.</p>
+    <p>Se instala como app. Ven su día y reportan cargas, gastos e incidencias en segundos, sin pasar por la tienda.</p>
     <div class="celda__visual" aria-hidden="true">
       <div class="celular">
         <div class="celular__pantalla">
